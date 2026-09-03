@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ZedScan Map</title>
+
+    <!-- Leaflet from CDN (simple MVP) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <style>
+        html, body { height: 100%; margin: 0; padding: 0; }
+        #map { height: 100%; width: 100%; }
+    </style>
+</head>
+<body>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<div id="map"></div>
+
+<script>
+    // Default view (Lusaka) until Android injects real coords
+    var map = L.map('map').setView([-15.4167, 28.2833], 13);
+
+    // OSM tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: ''
+    }).addTo(map);
+
+    // Simple "tower" marker icon (SVG)
+    var towerIcon = L.divIcon({
+      className: '',
+      html: `
+        <div style="
+          width:34px;height:34px;border-radius:50%;
+          background:#0f9d58; display:flex; align-items:center; justify-content:center;
+          box-shadow:0 4px 10px rgba(0,0,0,0.25);
+        ">
+          <span style="color:white;font-size:18px;line-height:1;">
+            <ion-icon name="radio-outline"></ion-icon>
+          </span>
+        </div>
+      `,
+      iconSize: [34,34],
+      iconAnchor: [17,34],
+      popupAnchor: [0,-34]
+    });
+
+    var marker = null;
+    var circle = null;
+
+    // Called by Android
+    function setEvent(lat, lng, cellId, accuracy, sender, network) {
+      if (!lat || !lng) return;
+
+      var pos = [lat, lng];
+
+      if (marker) map.removeLayer(marker);
+      if (circle) map.removeLayer(circle);
+
+      marker = L.marker(pos, { icon: towerIcon }).addTo(map);
+
+      var cidText = (cellId && cellId > 0) ? cellId : "N/A";
+      var netText = (network && network.length) ? network : "Unknown";
+
+      marker.bindPopup(
+        "<b>Spam event</b><br/>" +
+        "Network: " + netText + "<br/>" +
+        "CID: " + cidText + "<br/>" +
+        "Sender: " + (sender || "Unknown")
+      ).openPopup();
+
+      // Accuracy circle if provided
+      if (accuracy && accuracy > 0) {
+        circle = L.circle(pos, { radius: accuracy }).addTo(map);
+      }
+
+      map.setView(pos, 16);
+    }
+</script>
+</body>
+</html>

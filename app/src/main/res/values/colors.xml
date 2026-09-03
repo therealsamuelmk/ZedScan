@@ -1,0 +1,17 @@
+<resources>
+    <color name="zed_green_900">#0B3D2E</color>
+    <color name="zed_green_700">#0F6B4E</color>
+    <color name="zed_green_500">#16A34A</color>
+    <color name="zed_green_100">#DCFCE7</color>
+
+    <color name="zed_bg">#F7FBF8</color>
+    <color name="zed_text">#0F172A</color>
+    <color name="history_risk_high">#D93025</color>
+    <color name="history_risk_high_bg">#FDECEC</color>
+
+    <color name="history_risk_medium">#F29900</color>
+    <color name="history_risk_medium_bg">#FFF4DB</color>
+
+    <color name="history_risk_low">#188038</color>
+    <color name="history_risk_low_bg">#EAF7EE</color>
+</resources>

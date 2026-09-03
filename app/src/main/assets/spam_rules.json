@@ -1,0 +1,427 @@
+{
+  "version": 2,
+  "schema": "zedscan-spam-rules/2",
+  "updated": "2026-09-03",
+
+  "threshold": 55,
+  "suspiciousThreshold": 38,
+  "maxScore": 100,
+
+  "channelThresholdDelta": {
+    "SMS": 0,
+    "GMAIL": 6
+  },
+
+  "allCapsMinLen": 16,
+  "allCapsRatio": 0.7,
+  "allCapsWeight": 10,
+
+  "trustedSenderScoreReduction": 45,
+  "trustedOverrideMaxScore": 28,
+
+  "trustedSenderExact": [
+    "mtn",
+    "airtel",
+    "airtelmoney",
+    "airtel money",
+    "mtnmomo",
+    "mtn momo",
+    "momo",
+    "zamtel",
+    "zamtelmoney",
+    "zamtel money",
+    "zanaco",
+    "fnb",
+    "fnbzambia",
+    "stanbic",
+    "stanbicbank",
+    "absa",
+    "absabank",
+    "indobank",
+    "investrust",
+    "ecobank",
+    "atlasmara",
+    "zesco",
+    "zra",
+    "napsa",
+    "rtsa",
+    "rtssa",
+    "zedmobile",
+    "airtelzm",
+    "mtnzambia"
+  ],
+
+  "trustedSenderContains": [
+    "mtn",
+    "airtel",
+    "zamtel",
+    "mtn momo",
+    "airtel money",
+    "zamtel money",
+    "momo",
+    "zanaco",
+    "fnb",
+    "stanbic",
+    "absa",
+    "standard chartered",
+    "investrust",
+    "ecobank",
+    "zesco",
+    "zra",
+    "rtssa",
+    "zedmobile",
+    "napsa"
+  ],
+
+  "trustedEmailDomains": [
+    "zanaco.co.zm",
+    "mtn.zm",
+    "mtn.com",
+    "airtel.co.zm",
+    "airtel.com",
+    "zamtel.co.zm",
+    "zamtel.zm",
+    "stanbicbank.co.zm",
+    "stanbic.com",
+    "fnb.co.zm",
+    "fnbzambia.co.zm",
+    "absa.co.zm",
+    "absa.africa",
+    "zesco.co.zm",
+    "zra.org.zm",
+    "napsa.co.zm",
+    "sc.com",
+    "ecobank.com"
+  ],
+
+  "senderBlocklistRegex": [
+    "(?i)\\b(prize|reward|promo|winner|lucky|giveaway|refund|claim)[-_. ]*(dept|department|center|centre|team|desk)?\\d*\\b",
+    "(?i)\\b(customer[-_. ]?care|help[-_. ]?desk|account[-_. ]?team|security[-_. ]?team)\\b.*@(?!.*(mtn|airtel|zamtel|zanaco|fnb|stanbic|absa|zesco|zra|napsa)\\.)",
+    "(?i)@.*\\.(xyz|top|club|online|click|link|live|shop|work|fit|loan|gq|cf|ml|tk|zip|mov|icu|rest|country|cam)\\b",
+    "(?i)@(gmial|gmai1|gnail|g[e3]mail|yah00|yaho|0utlook|hotmial|hotmai1|hotrnail)\\."
+  ],
+
+  "highRiskSenderRegex": [
+    "(?i)(no[-_. ]?reply|info|support|service|admin|alert|notify)@(?!.*(mtn|airtel|zamtel|zanaco|fnb|stanbic|absa|zesco|zra|napsa|sc\\.com)).*\\.(info|biz|top|xyz|online|site|website|space)\\b",
+    "(?i)\\b(verify|secure|update|confirm|account|billing|payment)[-_.]?(support|team|centre|center|dept)\\b",
+    "^(?i)\\+?\\d{1,4}[- ]?\\d{6,}$"
+  ],
+
+  "neverTrustRegex": [
+    "(?i)(send|share|confirm|provide|forward|enter)\\s*(me\\s*)?(your\\s*)?(pin|otp|password|one\\s*time\\s*password|card\\s*number|cvv)",
+    "(?i)(login|log\\s*in|sign\\s*in)\\s*(now|here|below|to\\s*continue)",
+    "(?i)(verify|validate|reactivate|restore)\\s*(your\\s*)?(account|profile|wallet)\\s*(here|now|below|immediately)?",
+    "(?i)(congratulations|you\\s*have\\s*won|claim\\s*your\\s*prize|lottery\\s*winner|lucky\\s*winner)",
+    "(?i)(bit\\.ly|tinyurl\\.com|cutt\\.ly|is\\.gd|rb\\.gy|t\\.co|goo\\.gl|ow\\.ly|shorturl\\.at|tiny\\.cc)",
+    "(?i)https?://\\d{1,3}(\\.\\d{1,3}){3}",
+    "(?i)https?://[^\\s/]*xn--"
+  ],
+
+  "keywordCategories": [
+    {
+      "name": "credential_phish",
+      "weight": 16,
+      "wordBoundary": true,
+      "terms": [
+        "verify your account",
+        "confirm your account",
+        "confirm your identity",
+        "validate your account",
+        "reactivate your account",
+        "update your details",
+        "update your information",
+        "your account has been suspended",
+        "your account will be closed",
+        "your account is locked",
+        "unusual login",
+        "unauthorized login",
+        "unauthorised access",
+        "confirm your pin",
+        "confirm your password",
+        "security alert",
+        "account verification required",
+        "verify now",
+        "click to verify",
+        "re-verify"
+      ]
+    },
+    {
+      "name": "prize_scam",
+      "weight": 15,
+      "wordBoundary": false,
+      "terms": [
+        "you have won",
+        "you have been selected",
+        "congratulations you",
+        "claim your prize",
+        "claim your reward",
+        "lucky winner",
+        "lottery winner",
+        "you are a winner",
+        "cash prize",
+        "gift voucher",
+        "free airtime",
+        "free data bundle",
+        "won a promotion",
+        "selected winner",
+        "you won",
+        "prize of k",
+        "reward of k"
+      ]
+    },
+    {
+      "name": "money_request",
+      "weight": 13,
+      "wordBoundary": false,
+      "terms": [
+        "send money",
+        "send airtime",
+        "processing fee",
+        "clearing fee",
+        "pay a fee",
+        "activation fee",
+        "registration fee",
+        "delivery fee",
+        "transfer the amount",
+        "wire the funds",
+        "deposit to activate",
+        "pay to receive",
+        "small fee",
+        "refundable fee",
+        "pay now to claim"
+      ]
+    },
+    {
+      "name": "loan_bait",
+      "weight": 11,
+      "wordBoundary": false,
+      "terms": [
+        "loan approved",
+        "instant loan",
+        "quick loan",
+        "cash loan",
+        "no collateral",
+        "get paid today",
+        "pre-approved loan",
+        "loan offer",
+        "borrow up to",
+        "low interest loan"
+      ]
+    },
+    {
+      "name": "urgency",
+      "weight": 8,
+      "wordBoundary": false,
+      "terms": [
+        "act now",
+        "urgent",
+        "immediately",
+        "final notice",
+        "last warning",
+        "within 24 hours",
+        "expires today",
+        "expire soon",
+        "today only",
+        "limited time",
+        "failure to comply",
+        "avoid suspension",
+        "before it is too late"
+      ]
+    },
+    {
+      "name": "delivery_courier",
+      "weight": 11,
+      "wordBoundary": false,
+      "terms": [
+        "package is waiting",
+        "parcel could not be delivered",
+        "confirm your delivery",
+        "shipment on hold",
+        "customs fee",
+        "customs clearance",
+        "redelivery",
+        "schedule your delivery",
+        "track your parcel",
+        "your shipment is pending",
+        "address is incomplete"
+      ]
+    },
+    {
+      "name": "crypto_invest",
+      "weight": 12,
+      "wordBoundary": false,
+      "terms": [
+        "crypto investment",
+        "bitcoin investment",
+        "forex trading",
+        "double your money",
+        "guaranteed returns",
+        "guaranteed profit",
+        "investment opportunity",
+        "trading signals",
+        "profit daily",
+        "high returns",
+        "invest and earn"
+      ]
+    },
+    {
+      "name": "job_scam",
+      "weight": 9,
+      "wordBoundary": false,
+      "terms": [
+        "work from home",
+        "earn from home",
+        "part time job offer",
+        "hiring immediately",
+        "hired immediately",
+        "no experience needed",
+        "daily payout",
+        "online job vacancy",
+        "earn k per day",
+        "become an agent today"
+      ]
+    },
+    {
+      "name": "romance_advance_fee",
+      "weight": 10,
+      "wordBoundary": false,
+      "terms": [
+        "next of kin",
+        "beneficiary of",
+        "inheritance fund",
+        "unclaimed funds",
+        "compensation payment",
+        "united nations grant",
+        "diplomatic courier",
+        "trapped funds"
+      ]
+    }
+  ],
+
+  "hamKeywords": {
+    "weight": -14,
+    "wordBoundary": true,
+    "terms": [
+      "your otp is",
+      "one time password",
+      "verification code is",
+      "your code is",
+      "your verification code",
+      "do not share this code",
+      "your balance is",
+      "available balance",
+      "current balance",
+      "transaction of",
+      "you have received",
+      "payment received",
+      "payment of",
+      "receipt no",
+      "receipt number",
+      "invoice attached",
+      "invoice for the month",
+      "delivered to",
+      "out for delivery",
+      "appointment",
+      "thank you for your payment",
+      "statement is ready",
+      "successfully processed",
+      "ref no",
+      "reference number",
+      "e-receipt",
+      "airtime balance",
+      "data balance",
+      "meeting",
+      "your order has shipped"
+    ]
+  },
+
+  "contains": [
+    { "p": "verify your account", "w": 12 },
+    { "p": "account suspended", "w": 12 },
+    { "p": "account locked", "w": 12 },
+    { "p": "unusual activity", "w": 10 },
+    { "p": "you have won", "w": 12 },
+    { "p": "claim your prize", "w": 12 },
+    { "p": "send money", "w": 10 },
+    { "p": "processing fee", "w": 12 },
+    { "p": "loan approved", "w": 12 },
+    { "p": "final notice", "w": 10 }
+  ],
+
+  "regex": [
+    { "name": "url_any", "r": "(https?://\\S+)|(www\\.[a-z0-9-]+\\.\\S+)", "w": 18 },
+    { "name": "url_shortener", "r": "\\b(bit\\.ly|tinyurl\\.com|t\\.co|rb\\.gy|is\\.gd|cutt\\.ly|goo\\.gl|ow\\.ly|buff\\.ly|shorturl\\.at|tiny\\.cc|lnkd\\.in|rebrand\\.ly)\\b", "w": 16 },
+    { "name": "url_ip", "r": "https?://\\d{1,3}(\\.\\d{1,3}){3}", "w": 22 },
+    { "name": "url_at_symbol", "r": "https?://[^\\s/]*@", "w": 20 },
+    { "name": "url_punycode", "r": "https?://[^\\s/]*xn--", "w": 20 },
+    { "name": "url_hex_escape", "r": "%[0-9a-f]{2}.*%[0-9a-f]{2}", "w": 8 },
+    { "name": "suspicious_tld", "r": "https?://\\S+?\\.(xyz|top|club|online|click|link|live|shop|work|fit|loan|zip|mov|country|gq|cf|ml|tk|icu|rest|cam)(?:[/:?#]|\\b)", "w": 16 },
+    { "name": "money_amount", "r": "(\\bk\\s*\\d{2,}\\b)|(\\bzmw\\s*\\d+)|(\\d+\\s*zmw)|(\\d+\\s*kwacha)|(\\$\\s*\\d+)|(\\busd\\s*\\d+)|(\\bngn\\s*\\d+)|(\\bR\\s*\\d{3,})", "w": 10 },
+    { "name": "otp_request", "r": "(send|share|give|provide|forward|tell|confirm|verify|enter|re-?enter|update|submit)\\s+(me\\s+)?(us\\s+)?(your\\s+)?(otp|pin|password|one\\s*time\\s*password|verification\\s*code|security\\s*code)", "w": 24 },
+    { "name": "bank_detail_request", "r": "(reply|respond|send|share|provide|confirm|update|submit)\\s+(with\\s+|us\\s+|me\\s+)?(your\\s+)?(full\\s+)?(bank|card|account|banking|atm|wallet)\\s+(details|detail|number|no|info|information|credentials)", "w": 16 },
+    { "name": "earnings_bait", "r": "(earn|make|get)\\s+(up\\s+to\\s+)?(k|zmw|\\$|usd)?\\s*\\d{2,}\\s*(k)?\\s*(per|a|each|every)\\s*(day|week|hour)", "w": 14 },
+    { "name": "phone_callback", "r": "(call|whatsapp|text|dial|sms)\\s+(us\\s+)?(back\\s+)?(on|at)?\\s*[:]?\\s*(\\+?\\d[\\d\\s().-]{7,}\\d)", "w": 8 },
+    { "name": "gmail_lookalike", "r": "@(g[e3]mail|gnail|gmial|gmai1|yah00|yaho0|0utlook|hotmial|hotrnail)\\.", "w": 20 },
+    { "name": "excess_punct", "r": "([!?$*]\\s*){3,}", "w": 8 },
+    { "name": "spaced_letters", "r": "(?:\\b|^)(?:[a-z0-9]\\s+){4,}[a-z0-9](?:\\b|$)", "w": 10 },
+    { "name": "reward_points_expiry", "r": "(reward|loyalty|bonus)\\s*points?.*(expir|will\\s*expire|about\\s*to\\s*expire)", "w": 12 },
+    { "name": "generic_greeting", "r": "^(dear\\s+(customer|user|client|member|account\\s*holder|valued\\s*customer))\\b", "w": 6 },
+    { "name": "attachment_bait", "r": "(open|view|download|click)\\s+(the\\s+)?attach(ed|ment)\\b|\\battached\\s+(invoice|document|file|receipt|statement|form|contract|order)\\b", "w": 9 }
+  ],
+
+  "urlHeuristics": {
+    "multiUrlThreshold": 3,
+    "multiUrlWeight": 10,
+    "manySubdomainsThreshold": 4,
+    "manySubdomainsWeight": 12,
+    "longHostThreshold": 40,
+    "longHostWeight": 8
+  },
+
+  "phoneSenderHeuristics": {
+    "rawLongNumberWeight": 6,
+    "foreignNumberWeight": 12,
+    "localPrefixes": ["09", "07", "260", "+260"]
+  },
+
+  "obfuscation": {
+    "zeroWidthWeight": 12,
+    "homoglyphWeight": 14,
+    "spacedKeywordWeight": 8,
+    "leetKeywordWeight": 8,
+    "excessiveEmojiThreshold": 5,
+    "excessiveEmojiWeight": 8,
+    "repeatedCharRunWeight": 4
+  },
+
+  "combos": [
+    { "name": "prize_plus_link",        "all": ["cat:prize_scam", "sig:url"],                       "w": 22 },
+    { "name": "prize_link_money",       "all": ["cat:prize_scam", "sig:url", "rx:money_amount"],     "w": 12 },
+    { "name": "phish_plus_link",        "all": ["cat:credential_phish", "sig:url"],                  "w": 18 },
+    { "name": "phish_plus_shortener",   "all": ["cat:credential_phish", "rx:url_shortener"],         "w": 10 },
+    { "name": "urgency_plus_link",      "all": ["cat:urgency", "sig:url"],                           "w": 12 },
+    { "name": "urgency_plus_phish",     "all": ["cat:urgency", "cat:credential_phish"],              "w": 10 },
+    { "name": "shortener_plus_money",   "all": ["rx:url_shortener", "rx:money_amount"],              "w": 16 },
+    { "name": "otp_request_plus_link",  "all": ["rx:otp_request", "sig:url"],                        "w": 10 },
+    { "name": "delivery_plus_link",     "all": ["cat:delivery_courier", "sig:url"],                  "w": 18 },
+    { "name": "delivery_plus_fee",      "all": ["cat:delivery_courier", "cat:money_request"],        "w": 14 },
+    { "name": "loan_plus_contact",      "all": ["cat:loan_bait", "rx:phone_callback"],               "w": 10 },
+    { "name": "job_plus_contact",       "all": ["cat:job_scam", "rx:phone_callback"],                "w": 10 },
+    { "name": "job_plus_money",         "all": ["cat:job_scam", "rx:money_amount"],                  "w": 10 },
+    { "name": "job_plus_bankdetails",   "all": ["cat:job_scam", "rx:bank_detail_request"],           "w": 12 },
+    { "name": "earnings_bait_plus_contact", "all": ["rx:earnings_bait", "rx:phone_callback"],        "w": 10 },
+    { "name": "earnings_bait_plus_link","all": ["rx:earnings_bait", "sig:url"],                      "w": 10 },
+    { "name": "crypto_plus_link",       "all": ["cat:crypto_invest", "sig:url"],                     "w": 14 },
+    { "name": "money_request_plus_link","all": ["cat:money_request", "sig:url"],                     "w": 12 },
+    { "name": "advance_fee_plus_contact","all": ["cat:romance_advance_fee", "rx:phone_callback"],    "w": 12 }
+  ],
+
+  "whitelistContains": [
+    "your otp is",
+    "one time password",
+    "verification code",
+    "do not share this code",
+    "your verification code is"
+  ],
+  "whitelistScoreReduction": 30
+}
